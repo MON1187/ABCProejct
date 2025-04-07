@@ -12,7 +12,7 @@ var Engine = Matter.Engine,
     Body = Matter.Body;
 
     //Add Events
-    Events = Matter.Body;
+    Events = Matter.Events;
 
 // 엔진 선언
 const engine = Engine.create();
