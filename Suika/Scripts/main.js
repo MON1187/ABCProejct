@@ -9,7 +9,7 @@ var Engine = Matter.Engine,
     World = Matter.World,
 
     //add Body
-    Body = Matter.Body;
+    Body = Matter.Body,
 
     //Add Events
     Events = Matter.Events;
@@ -101,7 +101,7 @@ function addFruits()
 //Get Keybod
 window.onkeydown = (event) => {
 
-    if(disableAction) returns
+    if(disableAction) return;
     switch(event.code)
     {
         case "KeyA":
@@ -132,31 +132,34 @@ window.onkeydown = (event) => {
 }
 
 Events.on(engine, "collisionStart", (event) => {
-        event.pairs.forEach((collision)=>{
-            //같은 과일일 경우
-            if(collision.bodyA.index == collision.bodyB.index)
-            {
-                //지우기 전에 해당 과일 값을 저장
-                const index = collision.bodyA.index;
+    event.pairs.forEach((collision)=>{
+        //같은 과일일 경우
+        if(collision.bodyA.index == collision.bodyB.index)
+        {
+            //지우기 전에 해당 과일 값을 저장
+            const index = collision.bodyA.index;
 
-                World.remove(world,[collision.bodyA,collision.bodyB]);
+            if(index == FRUITS.length - 1)
+                return;
+
+            World.remove(world,[collision.bodyA,collision.bodyB]);
                 
-                const newFruit = FRUITS[index + 1];
-                const newBody = Bodies.circle(
-                    //충돌한 지점의 x,y
-                    collision.collision.supports[0].x,
-                    collision.collision.supports[0].y,
-                    newFruit.radius,
-                    {
-                        index : index + 1,
-                        render:{ sprite: {texture: `${fruits.name}.png`}},
-                    }
-                )
+            const newFruit = FRUITS[index + 1];
+            const newBody = Bodies.circle(
+                //충돌한 지점의 x,y
+                collision.collision.supports[0].x,
+                collision.collision.supports[0].y,
+                newFruit.radius,
+                {
+                index : index + 1,
+                render : { sprite: {texture: `${newFruit.name}.png`}},
+                }
+            );
 
                 //New add fruit
-                World.Add(world, newBody);
-            }
-        })
+                World.add(world, newBody);
+        }
+    })
 })
 
 
