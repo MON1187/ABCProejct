@@ -11,6 +11,9 @@ var Engine = Matter.Engine,
     //add Body
     Body = Matter.Body;
 
+    //Add Events
+    Events = Matter.Body;
+
 // 엔진 선언
 const engine = Engine.create();
 
@@ -127,5 +130,34 @@ window.onkeydown = (event) => {
             break;
     }
 }
+
+Events.on(engine, "collisionStart", (event) => {
+        event.pairs.forEach((collision)=>{
+            //같은 과일일 경우
+            if(collision.bodyA.index == collision.bodyB.index)
+            {
+                //지우기 전에 해당 과일 값을 저장
+                const index = collision.bodyA.index;
+
+                World.remove(world,[collision.bodyA,collision.bodyB]);
+                
+                const newFruit = FRUITS[index + 1];
+                const newBody = Bodies.circle(
+                    //충돌한 지점의 x,y
+                    collision.collision.supports[0].x,
+                    collision.collision.supports[0].y,
+                    newFruit.radius,
+                    {
+                        index : index + 1,
+                        render:{ sprite: {texture: `${fruits.name}.png`}},
+                    }
+                )
+
+                //New add fruit
+                World.Add(world, newBody);
+            }
+        })
+})
+
 
 addFruits();//함수 호출
