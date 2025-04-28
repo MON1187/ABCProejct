@@ -230,7 +230,7 @@ Events.on(engine, "collisionStart", (event) => {
                 //New add fruit
                 World.add(world, newBody);
 
-                if(newBody.index === 9)
+                if(newBody.index === 10)
                 {
                     setTimeout(() =>{
                         alert("You made Suika!\nCongratulation");
