@@ -10,6 +10,8 @@ class Sprite{
     constructor({position, velocity}){
         this.position = position;
         
+        this.velocity = velocity;
+
         this.width = 50;
         this.height = 150;
     }
@@ -30,13 +32,13 @@ class Sprite{
 const player = new Sprite({
     position:{
         x :0,
-        y:0,
+        y: 0,
     },
     velocity : {
         x : 0,
         y : 10,
     },
-})
+});
 
 //2p Enemy
 const enemy = new Sprite({
@@ -48,16 +50,16 @@ const enemy = new Sprite({
         x : 0,
         y : 10,
     },
-})
+});
 
 function animate() {
     window.requestAnimationFrame(animate);
 
-//
 c.fillStyle = "black";
-c.fillRect(0,0,canvas,window,canvas.height);
+c.fillRect(0,0,canvas.width,canvas.height);
 
     //Drawing Character
     player.update();
     enemy.update();
 }
+animate();
